@@ -9,7 +9,7 @@ import streamlit as st
 from google import genai
 from google.genai import types
 
-MODELE = "gemini-3.1-flash-lite"
+MODELES = ["gemini-3.1-flash-lite", "gemini-3.5-flash-lite", "gemini-3.5-flash"]
 DOSSIER_SOURCES = Path(__file__).parent / "data" / "sources"
 
 CONSIGNES = """Tu es AgriConseil Walo, un assistant qui explique la riziculture irriguée
@@ -36,6 +36,7 @@ AFFICHAGE = {
     "fiche_fao_krupnik": ("Moyenne Vallée, département de Podor (pas le Delta)", "2012"),
     "fiche_jica_2019": ("Départements de Dagana et de Podor", "2019"),
     "fiche_saed_echo_ppri": ("Dagana et Podor", "octobre 2025 à mars 2026"),
+    "fiche_wopereis": ("Delta (Thiagar, Gorom) et Moyenne Vallée (Podor)", "1998, mesures de 1993 à 1996"),
 }
 
 MOTS_VIDES = {
@@ -199,18 +200,24 @@ def demander_gemini(client, historique, question, trouves):
         contenu.append(types.Content(role=role, parts=[types.Part(text=m["content"])]))
     contenu.append(types.Content(role="user", parts=[types.Part(text=message)]))
 
-    for essai in range(3):
-        try:
-            reponse = client.models.generate_content(
-                model=MODELE,
-                contents=contenu,
-                config=types.GenerateContentConfig(system_instruction=CONSIGNES),
-            )
-            return reponse.text
-        except Exception:
-            if essai < 2:
-                time.sleep(2 * (essai + 1))
-    return None
+    derniere_erreur = ""
+    for modele in MODELES:
+        for essai in range(2):
+            try:
+                reponse = client.models.generate_content(
+                    model=modele,
+                    contents=contenu,
+                    config=types.GenerateContentConfig(system_instruction=CONSIGNES),
+                )
+                return reponse.text, ""
+            except Exception as e:
+                derniere_erreur = modele + " : " + str(e)[:200]
+                print("Erreur Gemini avec", derniere_erreur)
+                if "404" in str(e) or "NOT_FOUND" in str(e):
+                    break
+                if essai == 0:
+                    time.sleep(3)
+    return None, derniere_erreur
 
 
 def separer_utilises(texte, trouves):
@@ -306,11 +313,12 @@ def main():
                 texte = "La clé du service d'IA n'est pas configurée."
             else:
                 with st.spinner("Recherche dans les documents..."):
-                    texte = demander_gemini(client, st.session_state.messages[:-1],
-                                            question, trouves)
+                    texte, erreur = demander_gemini(client, st.session_state.messages[:-1],
+                                                    question, trouves)
                 if texte is None:
                     texte = ("Le service d'IA est très sollicité en ce moment. "
                              "Réessayez dans un instant.")
+                    st.caption("Détail technique : " + erreur)
                 else:
                     texte, utilises = separer_utilises(texte, trouves)
                     sources = sources_uniques(utilises)
