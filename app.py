@@ -1,3 +1,5 @@
+import hashlib
+import json
 import math
 import os
 import re
@@ -6,6 +8,7 @@ import unicodedata
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 from google import genai
 from google.genai import types
 
@@ -28,7 +31,7 @@ Règles :
 - Utilise des formulations prudentes (« AfricaRice propose », « le document suggère », « il est possible de ») plutôt que des ordres (« vous devez »).
 - Quand tu cites des dates ou un calendrier, précise qu'ils sont indicatifs et qu'ils varient selon le périmètre et l'eau disponible : à confirmer auprès de la SAED.
 - Ne liste pas les sources dans ta réponse : l'application les affiche.
-- Termine TOUJOURS par une dernière ligne séparée, de la forme « UTILISÉS : 1, 3 » avec les numéros des seuls extraits que tu as réellement utilisés (y compris une brochure vers laquelle tu renvoies), ou « UTILISÉS : aucun »."""
+- Termine TOUJOURS par une dernière ligne séparée, de la forme « UTILISÉS : 1, 3 » avec les numéros de tous les extraits dont tu as utilisé une information, même une seule phrase (y compris une brochure vers laquelle tu renvoies), ou « UTILISÉS : aucun »."""
 
 AFFICHAGE = {
     "fiche_africarice_brief05": ("Delta du fleuve Sénégal", "décembre 2022"),
@@ -233,6 +236,52 @@ def separer_utilises(texte, trouves):
     return texte.strip(), trouves[:1]
 
 
+def transcrire(client, donnees, type_mime):
+    consigne = ("Transcris fidèlement cet enregistrement en français. "
+                "Réponds uniquement avec le texte entendu, sans commentaire. "
+                "Si tu ne comprends pas ou s'il n'y a pas de parole, réponds exactement : INCOMPRIS")
+    for modele in MODELES:
+        try:
+            reponse = client.models.generate_content(
+                model=modele,
+                contents=[types.Part.from_bytes(data=donnees, mime_type=type_mime), consigne],
+            )
+            texte = (reponse.text or "").strip()
+            if not texte or "INCOMPRIS" in texte.upper():
+                return ""
+            return texte
+        except Exception as e:
+            print("Erreur transcription avec", modele, ":", str(e)[:200])
+    return ""
+
+
+def texte_pour_lecture(texte):
+    texte = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", texte)
+    texte = texte.replace("*", "").replace("#", "").replace("`", "")
+    texte = re.sub(r"\s+", " ", texte)
+    return texte.strip()
+
+
+def bouton_ecouter(texte):
+    propre = texte_pour_lecture(texte).replace("</", "<\\/")
+    html = """
+    <button onclick="lire()" style="font-size:18px;padding:10px 18px;border:none;border-radius:10px;
+    background:#2e7d32;color:white;cursor:pointer;">🔊 Écouter la réponse</button>
+    <button onclick="window.speechSynthesis.cancel()" style="font-size:18px;padding:10px 14px;border:none;
+    border-radius:10px;background:#9e9e9e;color:white;cursor:pointer;">⏹ Arrêter</button>
+    <script>
+    function lire() {
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(__TEXTE__);
+        u.lang = "fr-FR";
+        u.rate = 0.9;
+        window.speechSynthesis.speak(u);
+    }
+    </script>
+    """.replace("__TEXTE__", json.dumps(propre))
+    components.html(html, height=60)
+
+
 def afficher_sources(sources):
     if not sources:
         return
@@ -269,6 +318,9 @@ def main():
     st.warning("L'IA peut se tromper. Cet assistant ne remplace pas un technicien agricole "
                "et ne donne pas de doses d'engrais ou de produits.")
 
+    with st.expander("🎙️ Poser ma question à voix haute"):
+        audio = st.audio_input("Appuyez sur le micro, parlez, puis arrêtez l'enregistrement")
+
     extraits = charger_extraits()
     titres = sorted(set(e["titre"] for e in extraits))
     if not extraits:
@@ -285,15 +337,38 @@ def main():
     for m in st.session_state.messages:
         with st.chat_message(m["role"]):
             st.write(m["content"])
+            if m["role"] == "assistant":
+                bouton_ecouter(m["content"])
             afficher_sources(m.get("sources"))
 
     question = st.chat_input("Posez votre question sur la culture du riz...")
+    depuis_voix = False
+    if audio is not None:
+        donnees = audio.getvalue()
+        empreinte = hashlib.md5(donnees).hexdigest()
+        if st.session_state.get("derniere_audio") != empreinte:
+            st.session_state.derniere_audio = empreinte
+            client_audio = creer_client()
+            if client_audio is None:
+                st.warning("La clé du service d'IA n'est pas configurée.")
+            else:
+                with st.spinner("J'écoute votre question..."):
+                    entendu = transcrire(client_audio, donnees,
+                                         getattr(audio, "type", None) or "audio/wav")
+                if entendu:
+                    question = entendu
+                    depuis_voix = True
+                else:
+                    st.warning("Je n'ai pas bien compris l'enregistrement. "
+                               "Réessayez ou écrivez votre question.")
     if not question:
         return
 
     st.session_state.messages.append({"role": "user", "content": question})
     with st.chat_message("user"):
         st.write(question)
+        if depuis_voix:
+            st.caption("🎙️ Question entendue à voix haute")
 
     trouves = chercher(question, extraits)
     if est_question_dose(question):
@@ -323,6 +398,7 @@ def main():
                     texte, utilises = separer_utilises(texte, trouves)
                     sources = sources_uniques(utilises)
         st.write(texte)
+        bouton_ecouter(texte)
         afficher_sources(sources)
 
     st.session_state.messages.append({"role": "assistant", "content": texte, "sources": sources})
