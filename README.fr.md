@@ -44,7 +44,7 @@ C'est une petite architecture de génération augmentée par recherche, construi
 - **Modèle :** Google Gemini via Google AI Studio (`gemini-3.1-flash-lite`, avec repli sur `gemini-3.5-flash-lite` et `gemini-3.5-flash`), utilisé pour rédiger les réponses à partir des passages trouvés et pour transcrire les questions parlées.
 - **Recherche :** code écrit dans `app.py` (correspondance de mots, pondération par rareté, bonus quand un mot de la question correspond au titre d'un passage).
 - **Lecture à voix haute :** API de synthèse vocale du navigateur (aucun service supplémentaire).
-- **Évaluation :** `tests/test_recherche.py` exécute 20 contrôles automatiques de l'étape de recherche (17 questions qui doivent trouver un passage donné et 3 qui ne doivent rien trouver). Il vérifie la recherche seulement, pas la qualité de la rédaction de Gemini. Des grilles de test manuelles se trouvent dans `tests/questions_test.md` et `tests/questions_construites.md` (20 questions réalistes écrites à partir des thèmes des documents ; elles ne viennent pas de vrais producteurs, et un essai avec de vrais utilisateurs reste à faire).
+- **Évaluation :** `tests/test_recherche.py` exécute 23 contrôles automatiques de l'étape de recherche (20 questions qui doivent trouver un passage donné et 3 qui ne doivent rien trouver). Il vérifie la recherche seulement, pas la qualité de la rédaction de Gemini. Des grilles de test manuelles se trouvent dans `tests/questions_test.md` et `tests/questions_construites.md` (20 questions réalistes écrites à partir des thèmes des documents ; elles ne viennent pas de vrais producteurs, et un essai avec de vrais utilisateurs reste à faire).
 
 ## Documents utilisés
 
@@ -56,6 +56,8 @@ L'application ne garde que de courtes notes reformulées et des liens, pas les d
 | AfricaRice, Innovation Brief 06, options agronomiques pour la salinité ([lien](https://www.africarice.org/_files/ugd/0839e4_8165cf02a7064e4d8bed5f9b4bc115ce.pdf)) | Delta et vallée | 2022 |
 | FAO, Krupnik et al., Améliorer la production du riz irrigué dans la vallée du fleuve Sénégal ([lien](https://fao.org/fileadmin/user_upload/ippm/docs/1_Am%C3%A9liorer_du_riz.pdf)) | Moyenne Vallée (Podor) | 2012 |
 | JICA, étude préparatoire du projet de production de riz irrigué ([lien](https://openjicareport.jica.go.jp/pdf/12353819.pdf)) | Dagana et Podor | 2019 |
+| AfricaRice, Innovation Brief 01, RiceAdvice, application de conseils sur les engrais ([lien](https://www.africarice.org/_files/ugd/0839e4_2665069444494d459c9180e4db607de4.pdf)) | Outil général, bas-fonds irrigués | 2022 |
+| AfricaRice, Innovation Brief 02, RiceAdvice-WeedManager, application sur les mauvaises herbes ([lien](https://www.africarice.org/_files/ugd/0839e4_7c68e4b917e94825ae9b76033387996d.pdf)) | Outil général, avec un essai au Sénégal | 2022 |
 | SAED, bulletins « Écho PPRI » (pas encore de lien en ligne) | Dagana et Podor | oct. 2025 à mars 2026 |
 | Wopereis et al., Préserver la qualité des sols sous irrigation dans la vallée du fleuve Sénégal ([lien](https://library.wur.nl/ojs/index.php/njas/article/download/500/214)) | Delta et Moyenne Vallée | 1998 |
 
@@ -87,7 +89,7 @@ Pour la mise en ligne sur Streamlit Community Cloud, placez la clé dans les sec
 
 - L'assistant **ne remplace pas un conseiller agricole** et **ne donne aucune dose** d'engrais, de semences ou de produits.
 - Il n'a **pas de données propres à un village précis** : ses documents décrivent le Delta et la vallée. Certains sont anciens (l'un date de 1998) et les réponses indiquent l'année et la zone.
-- Il ne connaît que ses six documents. Pour tout le reste, il répond qu'il n'a pas de source.
+- Il ne connaît que ses huit documents. Pour tout le reste, il répond qu'il n'a pas de source.
 - La transcription de la voix peut se tromper, et la voix de lecture dépend du navigateur.
 - Le wolof n'est **pas encore disponible**.
 - L'IA peut faire des erreurs : les réponses doivent être vérifiées avec un technicien.

@@ -40,6 +40,8 @@ AFFICHAGE = {
     "fiche_jica_2019": ("Départements de Dagana et de Podor", "2019"),
     "fiche_saed_echo_ppri": ("Dagana et Podor", "octobre 2025 à mars 2026"),
     "fiche_wopereis": ("Delta (Thiagar, Gorom) et Moyenne Vallée (Podor)", "1998, mesures de 1993 à 1996"),
+    "fiche_africarice_brief01": ("Outil général pour les bas-fonds irrigués d'Afrique", "décembre 2022"),
+    "fiche_africarice_brief02": ("Outil général pour le riz irrigué, avec un essai au Sénégal", "décembre 2022"),
 }
 
 DETAILS = {
@@ -73,6 +75,18 @@ DETAILS = {
         "pourquoi": "Donne la situation récente (2025-2026) : réhabilitation de périmètres, "
                     "stockage, drainage.",
     },
+    "fiche_africarice_brief01": {
+        "organisme": "AfricaRice",
+        "theme": "Engrais : application RiceAdvice",
+        "pourquoi": "Explique l'outil qu'AfricaRice recommande pour adapter les engrais à chaque "
+                    "parcelle, au lieu de donner une dose unique.",
+    },
+    "fiche_africarice_brief02": {
+        "organisme": "AfricaRice",
+        "theme": "Mauvaises herbes : application WeedManager",
+        "pourquoi": "Explique l'outil d'AfricaRice pour gérer les mauvaises herbes avant, pendant "
+                    "et après la saison, avec un essai au Sénégal.",
+    },
     "fiche_wopereis": {
         "organisme": "WARDA, ORSTOM, SAED (article scientifique)",
         "theme": "Salinité des sols du Delta",
@@ -87,6 +101,8 @@ THEMES = {
     "Eau et irrigation": "eau irrigation drainage",
     "Salinité des sols": "salinité sel",
     "Variétés": "variétés",
+    "Engrais et conseils": "engrais RiceAdvice application",
+    "Mauvaises herbes": "herbes désherbage WeedManager",
     "Récolte": "récolte",
     "Contexte de Dagana": "Dagana Podor périmètres",
 }
@@ -103,7 +119,7 @@ MOTS_VIDES = {
     "comment", "quand", "quel", "quelle", "quels", "quelles", "faire", "fait", "faut", "peut",
     "peux", "dois", "doit", "etre", "avoir", "sont", "ont", "cette", "cet", "tout", "tous",
     "pas", "mais", "ou", "donc", "selon", "entre", "apres", "avant", "puis", "aussi", "afin",
-    "tres", "bien", "etc", "ainsi", "lors", "chez", "vers", "ici", "faut", "dit", "dire",
+    "france", "francais", "donner", "donne", "donnez", "tres", "bien", "etc", "ainsi", "lors", "chez", "vers", "ici", "faut", "dit", "dire",
 }
 
 
@@ -124,6 +140,8 @@ def mots_cles(texte):
             mot = "salin"
         elif mot in ("dose", "doses", "dosage", "quantite", "quantites", "combien", "kilos", "kg"):
             mot = "quant"
+        elif mot in ("utiliser", "utilise", "utilisation", "fonctionne", "fonctionner"):
+            mot = "march"
         resultat.append(mot[:5])
     return resultat
 
@@ -231,6 +249,16 @@ SALUTATIONS = {"bonjour", "bonsoir", "salut", "salam", "hello", "coucou"}
 def est_salutation(question):
     mots = re.findall(r"[a-z]+", normaliser(question))
     return len(mots) > 0 and len(mots) <= 3 and mots[0] in SALUTATIONS
+
+
+def passages_riceadvice(extraits):
+    choix = []
+    for e in extraits:
+        if "Brief 01" in e["titre"] and e["texte"].startswith(("**À quoi ça sert**", "**Comment ça marche**")):
+            choix.append(e)
+        elif "Brief 05" in e["titre"] and e["texte"].startswith("**Engrais**"):
+            choix.append(e)
+    return choix
 
 
 def est_question_dose(question):
@@ -676,7 +704,7 @@ def repondre(extraits, zone_temps):
 
     trouves = chercher(question + " " + THEMES.get(theme, ""), extraits)
     if est_question_dose(question):
-        riceadvice = [e for e in extraits if "RiceAdvice" in e["texte"]][:1]
+        riceadvice = passages_riceadvice(extraits)
         trouves = riceadvice + [e for e in trouves if e not in riceadvice]
 
     sources = []

@@ -44,7 +44,7 @@ This is a small retrieval-augmented design, built without a vector database so t
 - **Model:** Google Gemini through Google AI Studio (`gemini-3.1-flash-lite`, with fallback to `gemini-3.5-flash-lite` and `gemini-3.5-flash`), used to write answers from the retrieved passages and to transcribe spoken questions.
 - **Retrieval:** own code in `app.py` (word matching, rarity weighting, bonus when a question word matches the title of a passage).
 - **Read aloud:** the Web Speech API of the browser (no extra service).
-- **Evaluation:** `tests/test_recherche.py` runs 20 automated checks on the search step (17 questions that must find a given passage and 3 that must find nothing). It checks the search only, not the quality of Gemini's wording. Manual test grids are in `tests/questions_test.md` and `tests/questions_construites.md` (20 realistic questions written from the documents' themes; they do not come from real growers, and a test with real users is still to be done).
+- **Evaluation:** `tests/test_recherche.py` runs 23 automated checks on the search step (20 questions that must find a given passage and 3 that must find nothing). It checks the search only, not the quality of Gemini's wording. Manual test grids are in `tests/questions_test.md` and `tests/questions_construites.md` (20 realistic questions written from the documents' themes; they do not come from real growers, and a test with real users is still to be done).
 
 ## Documents used
 
@@ -56,6 +56,8 @@ The app keeps only short rewritten notes and links, not the original documents. 
 | AfricaRice, Innovation Brief 06, Agronomic options for salinity management ([link](https://www.africarice.org/_files/ugd/0839e4_8165cf02a7064e4d8bed5f9b4bc115ce.pdf)) | Delta and valley | 2022 |
 | FAO, Krupnik et al., Improving irrigated rice production in the Senegal River Valley ([link](https://fao.org/fileadmin/user_upload/ippm/docs/1_Am%C3%A9liorer_du_riz.pdf)) | Middle Valley (Podor) | 2012 |
 | JICA, preparatory study for the irrigated rice production project ([link](https://openjicareport.jica.go.jp/pdf/12353819.pdf)) | Dagana and Podor | 2019 |
+| AfricaRice, Innovation Brief 01, RiceAdvice, fertilizer advice app ([link](https://www.africarice.org/_files/ugd/0839e4_2665069444494d459c9180e4db607de4.pdf)) | General tool for irrigated lowlands | 2022 |
+| AfricaRice, Innovation Brief 02, RiceAdvice-WeedManager, weed management app ([link](https://www.africarice.org/_files/ugd/0839e4_7c68e4b917e94825ae9b76033387996d.pdf)) | General tool, with a trial in Senegal | 2022 |
 | SAED, "Écho PPRI" bulletins (no online link yet) | Dagana and Podor | Oct. 2025 to Mar. 2026 |
 | Wopereis et al., Preserving soil quality under irrigation in the Senegal River Valley ([link](https://library.wur.nl/ojs/index.php/njas/article/download/500/214)) | Delta and Middle Valley | 1998 |
 
@@ -87,7 +89,7 @@ When deployed on Streamlit Community Cloud, put the key in the app secrets as `G
 
 - The assistant **does not replace an agricultural adviser** and **gives no doses** of fertilizer, seeds or products.
 - It has **no data specific to a single village**: its documents describe the Delta and the valley. Some are old (one dates from 1998) and the answers say the year and area.
-- It only knows its six documents. For anything else it answers that it has no source.
+- It only knows its eight documents. For anything else it answers that it has no source.
 - Voice transcription can make mistakes, and the read-aloud voice depends on the browser.
 - Wolof is **not available yet**.
 - AI can make mistakes: answers should be checked with a technician.

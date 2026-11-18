@@ -25,6 +25,9 @@ CAS = [
     ("Pourquoi les sols du Delta sont salés ?", "Pourquoi le Delta est salé"),
     ("Le riz augmente-t-il la salinité ?", "Idée clé"),
     ("Quel est le calendrier de culture du riz ?", "Calendrier proposé"),
+    ("Existe-t-il une application pour savoir quel engrais mettre ?", "**Engrais**"),
+    ("Comment utiliser RiceAdvice ?", "**Comment ça marche** : pour utiliser RiceAdvice"),
+    ("Y a-t-il une application pour les mauvaises herbes ?", "RiceAdvice-WeedManager est une application"),
 ]
 
 # Questions qui ne doivent trouver aucun passage
