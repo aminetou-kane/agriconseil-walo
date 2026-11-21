@@ -4,7 +4,7 @@
 
 A French-language assistant for irrigated rice growing in the Senegal River Delta and valley (Dagana department). Ask a question by typing or speaking; the answer is written only from a small set of cited documents, and the sources are shown under every answer.
 
-- **Live demo:** [to be added after deployment]
+- **Live demo:** [https://agriconseil-walo.streamlit.app](https://agriconseil-walo.streamlit.app)
 - **Demo video:** [to be added]
 - **Hackathon:** Build Your First AI App 2026 (Devpost)
 

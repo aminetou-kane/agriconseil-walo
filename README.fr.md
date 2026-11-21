@@ -4,7 +4,7 @@
 
 Un assistant en français sur la riziculture irriguée dans le Delta et la vallée du fleuve Sénégal (département de Dagana). On pose une question à l'écrit ou à voix haute ; la réponse est rédigée uniquement à partir d'un petit nombre de documents cités, et les sources sont affichées sous chaque réponse.
 
-- **Démo en ligne :** [à ajouter après la mise en ligne]
+- **Démo en ligne :** [https://agriconseil-walo.streamlit.app](https://agriconseil-walo.streamlit.app)
 - **Vidéo de démonstration :** [à ajouter]
 - **Hackathon :** Build Your First AI App 2026 (Devpost)
 
