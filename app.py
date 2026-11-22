@@ -513,8 +513,8 @@ def page_a_propos(extraits):
     st.markdown("**Les outils.** Python et Streamlit pour l'application ; Gemini (Google AI Studio) "
                 "pour rédiger les réponses et transcrire la voix ; des fiches documentaires en "
                 "fichiers texte ; GitHub pour le code ; la voix du navigateur pour lire les réponses.")
-    st.markdown("**Transparence.** Projet réalisé par " + AUTEURE + ", étudiante en L3 Informatique à "
-                "l'Université Gaston Berger, pour le hackathon Build Your First AI App 2026. "
+    st.markdown("**Transparence.** Projet réalisé par " + AUTEURE + ", étudiante en Master 1 IADM (Intelligence artificielle et Big Data), "
+                "pour le hackathon Build Your First AI App 2026. "
                 "Outil d'IA utilisé pendant le développement : Claude (Anthropic), pour aider à écrire "
                 "le code et les fiches documentaires. Les fiches s'appuient sur les documents publics "
                 "cités ci-dessus.")

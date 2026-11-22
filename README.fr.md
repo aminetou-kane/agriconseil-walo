@@ -5,7 +5,6 @@
 Un assistant en français sur la riziculture irriguée dans le Delta et la vallée du fleuve Sénégal (département de Dagana). On pose une question à l'écrit ou à voix haute ; la réponse est rédigée uniquement à partir d'un petit nombre de documents cités, et les sources sont affichées sous chaque réponse.
 
 - **Démo en ligne :** [https://agriconseil-walo.streamlit.app](https://agriconseil-walo.streamlit.app)
-- **Vidéo de démonstration :** [à ajouter]
 - **Hackathon :** Build Your First AI App 2026 (Devpost)
 
 ## Le problème
@@ -100,17 +99,11 @@ Les questions sont envoyées au service Gemini de Google pour produire la répon
 
 ## Ma contribution et les outils d'IA
 
-Projet d'**Aminetou Kane**, étudiante en L3 Informatique (Systèmes d'Information) à l'Université Gaston Berger de Saint-Louis, Sénégal.
+Projet d'**Aminetou Kane**, étudiante en Master 1 IADM (Intelligence artificielle et Big Data), après une licence en Informatique (Systèmes d'Information) à l'Université Gaston Berger de Saint-Louis, Sénégal.
 
 - **Mon travail :** choisir le problème et la zone, rédiger le cahier des charges, décider ce que l'assistant doit et ne doit pas faire (sources, pas de doses, réponses honnêtes « pas de source »), recueillir les bulletins de la SAED, installer et lancer le projet sur mon ordinateur, tester l'application et décider des changements d'interface et de périmètre.
 - **Outils d'IA utilisés :** Claude (Anthropic) m'a aidée à écrire le code et les fiches de documents au cours d'une longue conversation, et Google Gemini rédige les réponses dans l'application. J'ai relu et testé les résultats ; les documents eux-mêmes sont crédités ci-dessus.
 
-> À finir avant l'envoi : vérifier que cette partie décrit exactement votre contribution, et ajouter les liens de la démo en ligne et de la vidéo.
-
 ## Suite prévue
 
 Le wolof (voix et texte) après validation avec des locuteurs, davantage de documents dont certains propres à la zone de Dagana, et un essai avec de vrais producteurs.
-
-## Licence
-
-À choisir.

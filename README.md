@@ -5,7 +5,6 @@
 A French-language assistant for irrigated rice growing in the Senegal River Delta and valley (Dagana department). Ask a question by typing or speaking; the answer is written only from a small set of cited documents, and the sources are shown under every answer.
 
 - **Live demo:** [https://agriconseil-walo.streamlit.app](https://agriconseil-walo.streamlit.app)
-- **Demo video:** [to be added]
 - **Hackathon:** Build Your First AI App 2026 (Devpost)
 
 ## The problem
@@ -100,17 +99,11 @@ Questions are sent to Google's Gemini service to produce the answer, so users sh
 
 ## My contribution and AI tools
 
-Project by **Aminetou Kane**, L3 Computer Science student (Information Systems) at Université Gaston Berger, Saint-Louis, Senegal.
+Project by **Aminetou Kane**, Master 1 student in IADM (Artificial Intelligence and Big Data), after a bachelor's degree in Computer Science (Information Systems) at Université Gaston Berger, Saint-Louis, Senegal.
 
 - **My own work:** choosing the problem and the area, writing the specification, deciding what the assistant must and must not do (sources, no doses, honest "no source" answers), collecting the SAED bulletins, setting up and running the project on my computer, testing the app and deciding the interface and scope changes.
 - **AI tools used:** Claude (Anthropic) helped write the code and the document notes in a long conversation, and Google Gemini writes the answers inside the app. I reviewed and tested the results; the documents themselves are credited above.
 
-> To finish before submission: check that this section describes your own contribution exactly, and add the live demo and video links.
-
 ## Roadmap
 
 Wolof (voice and text) after validation with speakers, more documents including ones specific to the Dagana area, and a test with real growers.
-
-## License
-
-To be chosen.
