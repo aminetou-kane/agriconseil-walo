@@ -101,8 +101,28 @@ Les questions sont envoyées au service Gemini de Google pour produire la répon
 
 Projet d'**Aminetou Kane**, étudiante en Master 1 IADM (Intelligence artificielle et Big Data), après une licence en Informatique (Systèmes d'Information) à l'Université Gaston Berger de Saint-Louis, Sénégal.
 
-- **Mon travail :** choisir le problème et la zone, rédiger le cahier des charges, décider ce que l'assistant doit et ne doit pas faire (sources, pas de doses, réponses honnêtes « pas de source »), recueillir les bulletins de la SAED, installer et lancer le projet sur mon ordinateur, tester l'application et décider des changements d'interface et de périmètre.
-- **Outils d'IA utilisés :** Claude (Anthropic) m'a aidée à écrire le code et les fiches de documents au cours d'une longue conversation, et Google Gemini rédige les réponses dans l'application. J'ai relu et testé les résultats ; les documents eux-mêmes sont crédités ci-dessus.
+**Ce que j'ai fait**
+
+- J'ai choisi le sujet à partir de la réalité de l'agriculture au Sénégal et rédigé un cahier des charges complet avant de commencer.
+- J'ai posé les règles de l'assistant : toujours montrer les sources, dire « pas de source » plutôt qu'inventer, et ne jamais donner de doses.
+- J'ai décidé de concentrer le projet sur Dagana et le Delta, parce qu'il y a plus de documents.
+- J'ai trouvé et rassemblé les bulletins de la SAED.
+- J'ai demandé la voix (micro et lecture de la réponse) pour ceux qui n'écrivent pas, et décidé de garder le wolof pour plus tard, le temps de le vérifier avec des locuteurs.
+- J'ai décidé de l'interface : accueil épuré comme un assistant moderne, pas de questions suggérées, avertissement sous la zone de saisie, historique des conversations dans le menu, pages « Sources » et « À propos ».
+- J'ai installé et lancé le projet sur mon ordinateur (Python, Streamlit, clé Gemini, dépôt GitHub) et résolu des problèmes au fil du chemin.
+- J'ai testé l'application, repéré des erreurs (par exemple une mauvaise réponse « pas de source » sur la récolte) et demandé leur correction.
+- J'ai testé l'application sur mon téléphone et je l'ai mise en ligne sur Streamlit Community Cloud.
+
+**Outils d'IA utilisés :** Claude (Anthropic) m'a aidée à écrire le code et les fiches de documents au cours d'une longue conversation, et Google Gemini rédige les réponses dans l'application. J'ai testé les résultats et vérifié qu'ils respectent mon cahier des charges ; les documents eux-mêmes sont crédités ci-dessus.
+
+**Ce que j'ai appris**
+
+- Chercher d'abord dans des documents, avant de demander à une IA, rend les réponses plus fiables et plus faciles à vérifier.
+- Une API gratuite a des limites et des pannes : l'application a besoin de messages d'erreur clairs et de modèles de secours.
+- Tester est important : une mauvaise réponse peut venir de la recherche, pas de l'IA.
+- Utiliser Git et GitHub, et garder la clé API secrète (variables d'environnement et secrets).
+- Concevoir pour des utilisateurs qui lisent peu : voix, interface simple et limites annoncées honnêtement.
+- Travailler avec un assistant IA tout en gardant les décisions : quoi construire, quoi ne pas faire, et à quoi cela doit ressembler.
 
 ## Suite prévue
 

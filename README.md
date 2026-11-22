@@ -101,8 +101,28 @@ Questions are sent to Google's Gemini service to produce the answer, so users sh
 
 Project by **Aminetou Kane**, Master 1 student in IADM (Artificial Intelligence and Big Data), after a bachelor's degree in Computer Science (Information Systems) at Université Gaston Berger, Saint-Louis, Senegal.
 
-- **My own work:** choosing the problem and the area, writing the specification, deciding what the assistant must and must not do (sources, no doses, honest "no source" answers), collecting the SAED bulletins, setting up and running the project on my computer, testing the app and deciding the interface and scope changes.
-- **AI tools used:** Claude (Anthropic) helped write the code and the document notes in a long conversation, and Google Gemini writes the answers inside the app. I reviewed and tested the results; the documents themselves are credited above.
+**What I did**
+
+- I chose the subject from the reality of farming in Senegal and wrote a full specification before starting.
+- I set the rules of the assistant: always show the sources, say "no source" instead of inventing an answer, and never give doses.
+- I decided to focus on the Dagana area and the Delta, where more documents exist.
+- I found and gathered the SAED bulletins.
+- I asked for voice input and read-aloud answers for people who do not write, and decided to keep Wolof for later, until it can be checked with speakers.
+- I decided the interface: a clean home page like a modern assistant, no suggested questions, the warning under the input box, conversation history in the menu, and "Sources" and "About" pages.
+- I installed and ran the project on my computer (Python, Streamlit, Gemini key, GitHub repository) and solved problems along the way.
+- I tested the app, found errors (for example a wrong "no source" answer about harvest time) and asked for them to be fixed.
+- I tested the app on my phone and put it online on Streamlit Community Cloud.
+
+**AI tools used:** Claude (Anthropic) helped me write the code and the document notes in a long conversation, and Google Gemini writes the answers inside the app. I tested the results and checked them against my specification; the documents themselves are credited above.
+
+**What I learned**
+
+- Searching documents first, before asking an AI model, makes answers more reliable and easier to check.
+- A free API has limits and outages, so the app needs clear error messages and backup models.
+- Testing matters: a wrong answer can come from the search step, not from the AI.
+- Using Git and GitHub, and keeping the API key secret (environment variables and secrets).
+- Designing for users who read little: voice, a simple interface and honest limits.
+- Working with an AI assistant while keeping the decisions: what to build, what not to do, and how it should look.
 
 ## Roadmap
 
